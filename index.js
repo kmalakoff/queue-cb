@@ -1,4 +1,4 @@
-var fifo = require('fifo');
+var Fifo = require('fifo');
 
 var bind = function (fn, self) {
   return function () {
@@ -9,7 +9,7 @@ var bind = function (fn, self) {
 function Queue(parallelism) {
   this._doneTask = bind(this._doneTask, this);
   this.parallelism = parallelism || Infinity;
-  this.tasks = fifo();
+  this.tasks = Fifo();
   this.running_count = 0;
   this.error = null;
   this.await_callback = null;
