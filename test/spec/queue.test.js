@@ -1,34 +1,36 @@
-var assert = require('chai').assert;
+var assert = require('assert');
+var nextTick = require('next-tick');
+
 var Queue = require('../..');
 
-describe('Queue @quick', function () {
+describe('Queue', function () {
   it('infinite parallelism', function (done) {
     const queue = new Queue();
 
     const results = [];
     queue.defer(function (callback) {
       results.push('1.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('1.1');
         callback();
-      }, 1 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('2.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('2.1');
         callback();
-      }, 2 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('3.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('3.1');
         callback();
-      }, 3 * 20);
+      });
     });
     return queue.await(function (err) {
-      assert.ok(!err, `No errors: ${err}`);
+      assert.ok(!err, 'No errors');
       assert.deepEqual(results, ['1.0', '2.0', '3.0', '1.1', '2.1', '3.1']);
       done();
     });
@@ -40,27 +42,27 @@ describe('Queue @quick', function () {
     const results = [];
     queue.defer(function (callback) {
       results.push('1.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('1.1');
         return callback(new Error('error'));
-      }, 1 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('2.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('2.1');
         callback();
-      }, 2 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('3.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('3.1');
         callback();
-      }, 3 * 20);
+      });
     });
     return queue.await(function (err) {
-      assert.ok(err, `Has error: ${err}`);
+      assert.ok(err, 'Has error: ' + err.message);
       assert.deepEqual(results, ['1.0', '2.0', '3.0', '1.1']);
       done();
     });
@@ -72,27 +74,27 @@ describe('Queue @quick', function () {
     const results = [];
     queue.defer(function (callback) {
       results.push('1.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('1.1');
         callback();
-      }, 1 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('2.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('2.1');
         return callback(new Error('error'));
-      }, 2 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('3.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('3.1');
         callback();
-      }, 3 * 20);
+      });
     });
     return queue.await(function (err) {
-      assert.ok(err, `Has error: ${err}`);
+      assert.ok(err, 'Has error: ' + err.message);
       assert.deepEqual(results, ['1.0', '2.0', '3.0', '1.1', '2.1']);
       done();
     });
@@ -104,27 +106,27 @@ describe('Queue @quick', function () {
     const results = [];
     queue.defer(function (callback) {
       results.push('1.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('1.1');
         callback();
-      }, 1 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('2.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('2.1');
         callback();
-      }, 2 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('3.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('3.1');
         callback();
-      }, 3 * 20);
+      });
     });
     return queue.await(function (err) {
-      assert.ok(!err, `No errors: ${err}`);
+      assert.ok(!err, 'No errors');
       assert.deepEqual(results, ['1.0', '1.1', '2.0', '2.1', '3.0', '3.1']);
       done();
     });
@@ -136,27 +138,27 @@ describe('Queue @quick', function () {
     const results = [];
     queue.defer(function (callback) {
       results.push('1.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('1.1');
         return callback(new Error('error'));
-      }, 1 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('2.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('2.1');
         callback();
-      }, 2 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('3.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('3.1');
         callback();
-      }, 3 * 20);
+      });
     });
     return queue.await(function (err) {
-      assert.ok(err, `Has error: ${err}`);
+      assert.ok(err, 'Has error: ' + err.message);
       assert.deepEqual(results, ['1.0', '1.1']);
       done();
     });
@@ -168,27 +170,27 @@ describe('Queue @quick', function () {
     const results = [];
     queue.defer(function (callback) {
       results.push('1.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('1.1');
         callback();
-      }, 1 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('2.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('2.1');
         return callback(new Error('error'));
-      }, 2 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('3.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('3.1');
         callback();
-      }, 3 * 20);
+      });
     });
     return queue.await(function (err) {
-      assert.ok(err, `Has error: ${err}`);
+      assert.ok(err, 'Has error: ' + err.message);
       assert.deepEqual(results, ['1.0', '1.1', '2.0', '2.1']);
       done();
     });
@@ -200,27 +202,27 @@ describe('Queue @quick', function () {
     const results = [];
     queue.defer(function (callback) {
       results.push('1.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('1.1');
         callback();
-      }, 1 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('2.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('2.1');
         callback();
-      }, 2 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('3.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('3.1');
         callback();
-      }, 3 * 20);
+      });
     });
     return queue.await(function (err) {
-      assert.ok(!err, `No errors: ${err}`);
+      assert.ok(!err, 'No errors');
       assert.deepEqual(results, ['1.0', '2.0', '1.1', '3.0', '2.1', '3.1']);
       done();
     });
@@ -232,27 +234,27 @@ describe('Queue @quick', function () {
     const results = [];
     queue.defer(function (callback) {
       results.push('1.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('1.1');
         return callback(new Error('error'));
-      }, 1 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('2.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('2.1');
         callback();
-      }, 2 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('3.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('3.1');
         callback();
-      }, 3 * 20);
+      });
     });
     return queue.await(function (err) {
-      assert.ok(err, `Has error: ${err}`);
+      assert.ok(err, 'Has error: ' + err.message);
       assert.deepEqual(results, ['1.0', '2.0', '1.1']);
       done();
     });
@@ -264,27 +266,27 @@ describe('Queue @quick', function () {
     const results = [];
     queue.defer(function (callback) {
       results.push('1.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('1.1');
         callback();
-      }, 1 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('2.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('2.1');
         return callback(new Error('error'));
-      }, 2 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('3.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('3.1');
         callback();
-      }, 3 * 20);
+      });
     });
     return queue.await(function (err) {
-      assert.ok(err, `Has error: ${err}`);
+      assert.ok(err, 'Has error: ' + err.message);
       assert.deepEqual(results, ['1.0', '2.0', '1.1', '3.0', '2.1']);
       done();
     });
@@ -296,27 +298,27 @@ describe('Queue @quick', function () {
     const results = [];
     queue.defer(function (callback) {
       results.push('1.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('1.1');
         callback();
-      }, 1 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('2.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('2.1');
         return callback(new Error('error'));
-      }, 2 * 20);
+      });
     });
     queue.defer(function (callback) {
       results.push('3.0');
-      setTimeout(function () {
+      nextTick(function () {
         results.push('3.1');
         callback();
-      }, 3 * 20);
+      });
     });
     queue.await(function (err) {
-      assert.ok(err, `Has error: ${err}`);
+      assert.ok(err, 'Has error: ' + err.message);
       assert.deepEqual(results, ['1.0', '1.1', '2.0', '2.1']);
       done();
     });
@@ -324,7 +326,7 @@ describe('Queue @quick', function () {
       return queue.await(function () {});
     } catch (error) {
       const err = error;
-      assert.ok(err, `Has error: ${err}`);
+      assert.ok(err, 'Has error: ' + err.message);
       assert.ok(err.toString().indexOf('Error: Awaiting callback was added twice') === 0, 'Expected message');
     }
   });
@@ -346,7 +348,7 @@ describe('Queue @quick', function () {
       callback();
     });
     return queue.await(function (err) {
-      assert.ok(err, `Has error: ${err}`);
+      assert.ok(err, 'Has error: ' + err.message);
       assert.deepEqual(results, ['1.0']);
       done();
     });
