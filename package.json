@@ -34,7 +34,7 @@
     "mocha": "^7.1.2",
     "mocha-compat": "^3.5.5",
     "next-tick": "^1.1.0",
-    "nvs": "^0.1.5",
+    "nvs": "^0.1.8",
     "prettier": "^2.0.5"
   },
   "dependencies": {
