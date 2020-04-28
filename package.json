@@ -6,8 +6,8 @@
   "scripts": {
     "test": "mocha test/spec/**/*.test.js",
     "compat": "nvs 14,12,10,8,6,4,0.12,0.10,0.8 mocha-compat test/spec/**/*.test.js",
-    "lint": "eslint .",
-    "format": "pre  ttier --write '**/*.js'"
+    "lint": "eslint . --ext js,mjs",
+    "format": "prettier --write '**/*.{js,mjs}'"
   },
   "repository": {
     "type": "git",
