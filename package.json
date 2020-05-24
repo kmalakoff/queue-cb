@@ -17,7 +17,6 @@
   "author": "Kevin Malakoff <kmalakoff@gmail.com> (https://github.com/kmalakoff)",
   "main": "index.js",
   "scripts": {
-    "compat": "nvs --engines mocha-compat test/spec/**/*.test.js",
     "format": "prettier --write '**/*.{js,mjs}'",
     "lint": "eslint . --ext js,mjs",
     "test": "mocha-compat test/spec/**/*.test.js"
@@ -36,7 +35,6 @@
     "eslint-plugin-standard": "^4.0.1",
     "mocha-compat": "^3.5.5",
     "next-tick": "^1.1.0",
-    "nvs": "^0.4.4",
     "prettier": "^2.0.5"
   },
   "engines": {
