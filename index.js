@@ -1,52 +1,44 @@
 var Fifo = require('fifo');
+// var nextTick = require('next-tick');
 
-var bind = function (fn, self) {
-  return function () {
-    return fn.apply(self, arguments);
+module.exports = function Queue(parallelism) {
+  if (typeof parallelism === 'undefined') parallelism = Infinity;
+
+  var awaitCalled = false;
+  var awaitCallback = null;
+  function callAwait() {
+    if (awaitCalled || !awaitCallback) return;
+    awaitCalled = true;
+    return awaitCallback(error);
+  }
+
+  var tasks = Fifo();
+  var runningCount = 0;
+  var error = null;
+  function queueCallback(err) {
+    runningCount--;
+    if (err && !error) error = err;
+    if (error || !(tasks.length + runningCount)) return callAwait();
+    while (runningCount < parallelism) {
+      if (!tasks.length) return;
+      var deferFn = tasks.shift();
+      runningCount++;
+      deferFn(queueCallback);
+    }
+  }
+
+  return {
+    defer: function defer(deferFn) {
+      if (error) return;
+      if (runningCount < parallelism) {
+        runningCount++;
+        deferFn(queueCallback);
+      } else tasks.push(deferFn);
+    },
+    await: function awaitFn(callback) {
+      if (awaitCallback) throw new Error('Awaiting callback was added twice: ' + callback);
+      awaitCallback = callback;
+      if (error || !(tasks.length + runningCount)) return callAwait();
+    },
   };
 };
-
-function Queue(parallelism) {
-  this._doneTask = bind(this._doneTask, this);
-  this.parallelism = parallelism || Infinity;
-  this.tasks = Fifo();
-  this.running_count = 0;
-  this.error = null;
-  this.await_callback = null;
-}
-
-Queue.prototype.defer = function (callback) {
-  this.tasks.push(callback);
-  return this._runTasks();
-};
-
-Queue.prototype.await = function (callback) {
-  if (this.await_callback) throw new Error('Awaiting callback was added twice: ' + callback);
-  this.await_callback = callback;
-  if (this.error || !(this.tasks.length + this.running_count)) return this._callAwaiting();
-};
-
-Queue.prototype._doneTask = function (err) {
-  this.running_count--;
-  this.error || (this.error = err);
-  return this._runTasks();
-};
-
-Queue.prototype._runTasks = function () {
-  var current;
-  if (this.error || !(this.tasks.length + this.running_count)) return this._callAwaiting();
-  while (this.running_count < this.parallelism) {
-    if (!this.tasks.length) return;
-    current = this.tasks.shift();
-    this.running_count++;
-    current(this._doneTask);
-  }
-};
-
-Queue.prototype._callAwaiting = function () {
-  if (this.await_called || !this.await_callback) return;
-  this.await_called = true;
-  return this.await_callback(this.error);
-};
-
-module.exports = Queue;
