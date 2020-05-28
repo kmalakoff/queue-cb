@@ -5,9 +5,9 @@ var Queue = require('../..');
 
 describe('Queue', function () {
   it('infinite parallelism', function (done) {
-    const queue = new Queue();
+    var queue = new Queue();
 
-    const results = [];
+    var results = [];
     queue.defer(function (callback) {
       results.push('1.0');
       nextTick(function () {
@@ -29,7 +29,7 @@ describe('Queue', function () {
         callback();
       });
     });
-    return queue.await(function (err) {
+    queue.await(function (err) {
       assert.ok(!err, 'No errors');
       assert.deepEqual(results, ['1.0', '2.0', '3.0', '1.1', '2.1', '3.1']);
       done();
@@ -37,9 +37,9 @@ describe('Queue', function () {
   });
 
   it('infinite parallelism (errors 1)', function (done) {
-    const queue = new Queue();
+    var queue = new Queue();
 
-    const results = [];
+    var results = [];
     queue.defer(function (callback) {
       results.push('1.0');
       nextTick(function () {
@@ -61,7 +61,7 @@ describe('Queue', function () {
         callback();
       });
     });
-    return queue.await(function (err) {
+    queue.await(function (err) {
       assert.ok(err, 'Has error: ' + err.message);
       assert.deepEqual(results, ['1.0', '2.0', '3.0', '1.1']);
       done();
@@ -69,9 +69,9 @@ describe('Queue', function () {
   });
 
   it('infinite parallelism (errors 2)', function (done) {
-    const queue = new Queue();
+    var queue = new Queue();
 
-    const results = [];
+    var results = [];
     queue.defer(function (callback) {
       results.push('1.0');
       nextTick(function () {
@@ -93,7 +93,7 @@ describe('Queue', function () {
         callback();
       });
     });
-    return queue.await(function (err) {
+    queue.await(function (err) {
       assert.ok(err, 'Has error: ' + err.message);
       assert.deepEqual(results, ['1.0', '2.0', '3.0', '1.1', '2.1']);
       done();
@@ -101,9 +101,9 @@ describe('Queue', function () {
   });
 
   it('parallelism 1', function (done) {
-    const queue = new Queue(1);
+    var queue = new Queue(1);
 
-    const results = [];
+    var results = [];
     queue.defer(function (callback) {
       results.push('1.0');
       nextTick(function () {
@@ -125,7 +125,7 @@ describe('Queue', function () {
         callback();
       });
     });
-    return queue.await(function (err) {
+    queue.await(function (err) {
       assert.ok(!err, 'No errors');
       assert.deepEqual(results, ['1.0', '1.1', '2.0', '2.1', '3.0', '3.1']);
       done();
@@ -133,9 +133,9 @@ describe('Queue', function () {
   });
 
   it('parallelism 1 (errors 1)', function (done) {
-    const queue = new Queue(1);
+    var queue = new Queue(1);
 
-    const results = [];
+    var results = [];
     queue.defer(function (callback) {
       results.push('1.0');
       nextTick(function () {
@@ -157,7 +157,7 @@ describe('Queue', function () {
         callback();
       });
     });
-    return queue.await(function (err) {
+    queue.await(function (err) {
       assert.ok(err, 'Has error: ' + err.message);
       assert.deepEqual(results, ['1.0', '1.1']);
       done();
@@ -165,9 +165,9 @@ describe('Queue', function () {
   });
 
   it('parallelism 1 (errors 2)', function (done) {
-    const queue = new Queue(1);
+    var queue = new Queue(1);
 
-    const results = [];
+    var results = [];
     queue.defer(function (callback) {
       results.push('1.0');
       nextTick(function () {
@@ -189,7 +189,7 @@ describe('Queue', function () {
         callback();
       });
     });
-    return queue.await(function (err) {
+    queue.await(function (err) {
       assert.ok(err, 'Has error: ' + err.message);
       assert.deepEqual(results, ['1.0', '1.1', '2.0', '2.1']);
       done();
@@ -197,9 +197,9 @@ describe('Queue', function () {
   });
 
   it('parallelism 2', function (done) {
-    const queue = new Queue(2);
+    var queue = new Queue(2);
 
-    const results = [];
+    var results = [];
     queue.defer(function (callback) {
       results.push('1.0');
       nextTick(function () {
@@ -221,7 +221,7 @@ describe('Queue', function () {
         callback();
       });
     });
-    return queue.await(function (err) {
+    queue.await(function (err) {
       assert.ok(!err, 'No errors');
       assert.deepEqual(results, ['1.0', '2.0', '1.1', '3.0', '2.1', '3.1']);
       done();
@@ -229,9 +229,9 @@ describe('Queue', function () {
   });
 
   it('parallelism 2 (errors 1)', function (done) {
-    const queue = new Queue(2);
+    var queue = new Queue(2);
 
-    const results = [];
+    var results = [];
     queue.defer(function (callback) {
       results.push('1.0');
       nextTick(function () {
@@ -253,7 +253,7 @@ describe('Queue', function () {
         callback();
       });
     });
-    return queue.await(function (err) {
+    queue.await(function (err) {
       assert.ok(err, 'Has error: ' + err.message);
       assert.deepEqual(results, ['1.0', '2.0', '1.1']);
       done();
@@ -261,9 +261,9 @@ describe('Queue', function () {
   });
 
   it('parallelism 2 (errors 2)', function (done) {
-    const queue = new Queue(2);
+    var queue = new Queue(2);
 
-    const results = [];
+    var results = [];
     queue.defer(function (callback) {
       results.push('1.0');
       nextTick(function () {
@@ -285,7 +285,7 @@ describe('Queue', function () {
         callback();
       });
     });
-    return queue.await(function (err) {
+    queue.await(function (err) {
       assert.ok(err, 'Has error: ' + err.message);
       assert.deepEqual(results, ['1.0', '2.0', '1.1', '3.0', '2.1']);
       done();
@@ -293,9 +293,9 @@ describe('Queue', function () {
   });
 
   it('catches await added twice', function (done) {
-    const queue = new Queue(1);
+    var queue = new Queue(1);
 
-    const results = [];
+    var results = [];
     queue.defer(function (callback) {
       results.push('1.0');
       nextTick(function () {
@@ -323,18 +323,18 @@ describe('Queue', function () {
       done();
     });
     try {
-      return queue.await(function () {});
+      queue.await(function () {});
     } catch (error) {
-      const err = error;
+      var err = error;
       assert.ok(err, 'Has error: ' + err.message);
       assert.ok(err.toString().indexOf('Error: Awaiting callback was added twice') === 0, 'Expected message');
     }
   });
 
   it('calls await if an error occurs before it is added', function (done) {
-    const queue = new Queue(1);
+    var queue = new Queue(1);
 
-    const results = [];
+    var results = [];
     queue.defer(function (callback) {
       results.push('1.0');
       return callback(new Error('error'));
@@ -347,7 +347,7 @@ describe('Queue', function () {
       results.push('3.0');
       callback();
     });
-    return queue.await(function (err) {
+    queue.await(function (err) {
       assert.ok(err, 'Has error: ' + err.message);
       assert.deepEqual(results, ['1.0']);
       done();
