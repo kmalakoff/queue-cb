@@ -19,10 +19,11 @@
   "scripts": {
     "format": "prettier --write '**/*.{js,mjs}'",
     "lint": "eslint . --ext js,mjs",
-    "test": "mocha-compat test/spec/**/*.test.js"
+    "test": "mocha-compat test/spec/**/*.test.js --no-timeouts"
   },
   "dependencies": {
-    "fifo": "^2.3.0"
+    "fifo": "^2.3.0",
+    "next-tick": "^1.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
@@ -34,7 +35,6 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "mocha-compat": "^3.5.5",
-    "next-tick": "^1.1.0",
     "prettier": "^2.0.5"
   },
   "engines": {

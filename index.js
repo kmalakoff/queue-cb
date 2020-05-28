@@ -1,5 +1,5 @@
 var Fifo = require('fifo');
-// var nextTick = require('next-tick');
+var nextTick = require('next-tick');
 
 module.exports = function Queue(parallelism) {
   if (typeof parallelism === 'undefined') parallelism = Infinity;
@@ -19,12 +19,10 @@ module.exports = function Queue(parallelism) {
     runningCount--;
     if (err && !error) error = err;
     if (error || !(tasks.length + runningCount)) return callAwait();
-    while (runningCount < parallelism) {
-      if (!tasks.length) return;
-      var deferFn = tasks.shift();
-      runningCount++;
-      deferFn(queueCallback);
-    }
+    if (!tasks.length) return;
+    var deferFn = tasks.shift();
+    runningCount++;
+    nextTick(deferFn.bind(null, queueCallback));
   }
 
   return {
