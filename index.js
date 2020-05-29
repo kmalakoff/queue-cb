@@ -1,5 +1,5 @@
 var Fifo = require('fifo');
-var nextTick = require('next-tick');
+var nextTick = require('./lib/nextTick');
 
 module.exports = function Queue(parallelism) {
   if (typeof parallelism === 'undefined') parallelism = Infinity;
