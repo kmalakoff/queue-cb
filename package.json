@@ -20,7 +20,7 @@
     "format": "prettier --write .",
     "lint": "eslint . --ext js,mjs",
     "test": "mocha-compat test/spec/**/*.test.js --no-timeouts",
-    "prepublish": "dtd \"npm run lint\" \"depcheck --ignores='depcheck'\""
+    "prepublishOnly": "dtd \"npm run lint\" \"depcheck --ignores='depcheck'\""
   },
   "dependencies": {
     "fifo": "^2.3.0",
