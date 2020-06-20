@@ -255,7 +255,7 @@ describe('Queue', function () {
     });
     queue.await(function (err) {
       assert.ok(!err, 'No errors');
-      assert.deepEqual(results, ['1.0', '2.0', '1.1', '2.1', '3.0', '3.1']);
+      assert.deepEqual(results, ['1.0', '2.0', '1.1', '3.0', '2.1', '3.1']);
       done();
     });
   });
@@ -319,7 +319,7 @@ describe('Queue', function () {
     });
     queue.await(function (err) {
       assert.ok(err, 'Has error: ' + err.message);
-      assert.deepEqual(results, ['1.0', '2.0', '1.1', '2.1']);
+      assert.deepEqual(results, ['1.0', '2.0', '1.1', '3.0', '2.1']);
       done();
     });
   });
