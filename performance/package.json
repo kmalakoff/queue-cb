@@ -16,6 +16,6 @@
   },
   "dependencies": {
     "benchmark-suite": "^0.1.6",
-    "queue-cb-1.1.2": "npm:queue-cb@1.1.2"
+    "queue-cb-1.1.2": "npm:queue-cb@1.1.5"
   }
 }
