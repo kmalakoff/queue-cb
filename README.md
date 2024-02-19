@@ -22,3 +22,7 @@ q.await(function(error) {
   console.log("Goodbye!");
 });
 ```
+
+### Documentation
+
+[API Docs](https://kmalakoff.github.io/queue-cb/)
