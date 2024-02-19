@@ -1,19 +1,19 @@
-var Fifo = require('fifo');
+import LinkedArray from './LinkedArray';
 
-module.exports = function Queue(parallelism) {
+export default function Queue(parallelism) {
   if (typeof parallelism === 'undefined') parallelism = Infinity;
 
-  var awaitCalled = false;
-  var awaitCallback = null;
+  let awaitCalled = false;
+  let awaitCallback = null;
   function callAwait() {
     if (awaitCalled || !awaitCallback) return;
     awaitCalled = true;
     return awaitCallback(error);
   }
 
-  var tasks = Fifo();
-  var runningCount = 0;
-  var error = null;
+  const tasks = new LinkedArray();
+  let runningCount = 0;
+  let error = null;
   function queueCallback(err) {
     runningCount--;
     if (err && !error) error = err;
@@ -32,9 +32,9 @@ module.exports = function Queue(parallelism) {
       } else tasks.push(deferFn);
     },
     await: function awaitFn(callback) {
-      if (awaitCallback) throw new Error('Awaiting callback was added twice: ' + callback);
+      if (awaitCallback) throw new Error(`Awaiting callback was added twice: ${callback}`);
       awaitCallback = callback;
       if (error || !(tasks.length + runningCount)) return callAwait();
     },
   };
-};
+}
