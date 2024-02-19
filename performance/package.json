@@ -15,10 +15,16 @@
     "test": "npm run ops && npm run mem"
   },
   "dependencies": {
-    "benchmark-suite": "^0.1.7",
-    "queue-cb-1.1.2": "npm:queue-cb@1.1.6"
+    "benchmark-suite": "^0.1.8",
+    "queue-cb-1.1.2": "npm:queue-cb@1.1.7"
   },
   "engines": {
     "node": ">=8"
+  },
+  "tsds": {
+    "source": "src/index.js",
+    "targets": [
+      "cjs"
+    ]
   }
 }
