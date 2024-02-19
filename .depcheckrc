@@ -1,1 +1,1 @@
-ignores: ["depcheck"]
+ignores: ["queue-cb", "depcheck", "ts-dev-stack", "@types/*"]
