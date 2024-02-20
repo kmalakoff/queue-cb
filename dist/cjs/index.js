@@ -8,7 +8,7 @@ Object.defineProperty(exports, "default", {
         return Queue;
     }
 });
-var _LinkedArray = /*#__PURE__*/ _interop_require_default(require("./LinkedArray"));
+var _LinkedArray = /*#__PURE__*/ _interop_require_default(require("./LinkedArray.js"));
 function _interop_require_default(obj) {
     return obj && obj.__esModule ? obj : {
         default: obj
