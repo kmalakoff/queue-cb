@@ -44,7 +44,7 @@
     "@types/node": "^20.11.19",
     "depcheck": "^1.4.7",
     "next-tick": "^1.1.0",
-    "ts-dev-stack": "^0.14.7"
+    "ts-dev-stack": "^0.14.8"
   },
   "engines": {
     "node": ">=0.8"

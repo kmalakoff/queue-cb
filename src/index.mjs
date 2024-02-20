@@ -1,4 +1,4 @@
-import LinkedArray from './LinkedArray';
+import LinkedArray from './LinkedArray.mjs';
 
 export default function Queue(parallelism) {
   if (typeof parallelism === 'undefined') parallelism = Infinity;
