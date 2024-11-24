@@ -15,7 +15,7 @@ function _interop_require_default(obj) {
     };
 }
 function Queue(parallelism) {
-    if (typeof parallelism === "undefined") parallelism = Infinity;
+    if (typeof parallelism === 'undefined') parallelism = Infinity;
     var awaitCalled = false;
     var awaitCallback = null;
     function callAwait() {

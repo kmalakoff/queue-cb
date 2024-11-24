@@ -72,7 +72,7 @@ var LinkedArray = /*#__PURE__*/ function() {
         {
             key: "shift",
             value: function shift() {
-                if (!this.node) throw new Error("Cannot shift: array empty");
+                if (!this.node) throw new Error('Cannot shift: array empty');
                 var node = this.node;
                 this.length--;
                 node.prev.link(node.next);
