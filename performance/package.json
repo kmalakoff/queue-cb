@@ -15,8 +15,8 @@
     "test": "npm run ops && npm run mem"
   },
   "dependencies": {
-    "benchmark-suite": "^0.1.8",
-    "queue-cb-1.1.2": "npm:queue-cb@1.1.7"
+    "benchmark-suite": "^1.1.0",
+    "queue-cb-1.1.2": "npm:queue-cb@1.2.1"
   },
   "engines": {
     "node": ">=8"
