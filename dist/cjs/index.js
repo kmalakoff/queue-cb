@@ -1,3 +1,4 @@
+// @ts-ignore
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -8,14 +9,14 @@ Object.defineProperty(exports, "default", {
         return Queue;
     }
 });
-var _LinkedArray = /*#__PURE__*/ _interop_require_default(require("./LinkedArray.js"));
+var _LinkedArrayts = /*#__PURE__*/ _interop_require_default(require("./LinkedArray.js"));
 function _interop_require_default(obj) {
     return obj && obj.__esModule ? obj : {
         default: obj
     };
 }
-function Queue(parallelism) {
-    if (typeof parallelism === "undefined") parallelism = Infinity;
+function Queue() {
+    var parallelism = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : Infinity;
     var awaitCalled = false;
     var awaitCallback = null;
     function callAwait() {
@@ -23,7 +24,7 @@ function Queue(parallelism) {
         awaitCalled = true;
         return awaitCallback(error);
     }
-    var tasks = new _LinkedArray.default();
+    var tasks = new _LinkedArrayts.default();
     var runningCount = 0;
     var error = null;
     function queueCallback(err) {
@@ -35,18 +36,18 @@ function Queue(parallelism) {
         tasks.shift()(queueCallback);
     }
     return {
-        defer: function defer(deferFn) {
+        defer: function defer(defer) {
             if (error) return;
             if (runningCount < parallelism) {
                 runningCount++;
-                deferFn(queueCallback);
-            } else tasks.push(deferFn);
+                defer(queueCallback);
+            } else tasks.push(defer);
         },
-        await: function awaitFn(callback) {
+        await: function _await(callback) {
             if (awaitCallback) throw new Error("Awaiting callback was added twice: ".concat(callback));
             awaitCallback = callback;
             if (error || !(tasks.length + runningCount)) return callAwait();
         }
     };
 }
-/* CJS INTEROP */ if (exports.__esModule && exports.default) { Object.defineProperty(exports.default, '__esModule', { value: true }); for (var key in exports) exports.default[key] = exports[key]; module.exports = exports.default; }
+/* CJS INTEROP */ if (exports.__esModule && exports.default) { try { Object.defineProperty(exports.default, '__esModule', { value: true }); for (var key in exports) { exports.default[key] = exports[key]; } } catch (_) {}; module.exports = exports.default; }

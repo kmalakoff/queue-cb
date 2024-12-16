@@ -1,6 +1,6 @@
+// @ts-ignore
 import LinkedArray from './LinkedArray.mjs';
-export default function Queue(parallelism) {
-    if (typeof parallelism === 'undefined') parallelism = Infinity;
+export default function Queue(parallelism = Infinity) {
     let awaitCalled = false;
     let awaitCallback = null;
     function callAwait() {
@@ -20,14 +20,14 @@ export default function Queue(parallelism) {
         tasks.shift()(queueCallback);
     }
     return {
-        defer: function defer(deferFn) {
+        defer (defer) {
             if (error) return;
             if (runningCount < parallelism) {
                 runningCount++;
-                deferFn(queueCallback);
-            } else tasks.push(deferFn);
+                defer(queueCallback);
+            } else tasks.push(defer);
         },
-        await: function awaitFn(callback) {
+        await (callback) {
             if (awaitCallback) throw new Error(`Awaiting callback was added twice: ${callback}`);
             awaitCallback = callback;
             if (error || !(tasks.length + runningCount)) return callAwait();
