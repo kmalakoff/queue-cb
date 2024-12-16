@@ -5,7 +5,7 @@ import Queue from 'queue-cb';
 
 describe('Queue', () => {
   it('infinite parallelism (not new)', (done) => {
-    const queue = Queue();
+    const queue = new Queue();
 
     const results = [];
     queue.defer((callback) => {

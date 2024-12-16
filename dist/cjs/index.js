@@ -10,44 +10,54 @@ Object.defineProperty(exports, "default", {
     }
 });
 var _LinkedArrayts = /*#__PURE__*/ _interop_require_default(require("./LinkedArray.js"));
+function _class_call_check(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+    }
+}
 function _interop_require_default(obj) {
     return obj && obj.__esModule ? obj : {
         default: obj
     };
 }
-function Queue() {
-    var parallelism = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : Infinity;
-    var awaitCalled = false;
-    var awaitCallback = null;
-    function callAwait() {
-        if (awaitCalled || !awaitCallback) return;
-        awaitCalled = true;
-        return awaitCallback(error);
+var Queue = /*#__PURE__*/ function() {
+    "use strict";
+    function Queue() {
+        var parallelism = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : Infinity;
+        _class_call_check(this, Queue);
+        this.parallelism = parallelism;
+        this.awaitCallback = null;
+        this.tasks = new _LinkedArrayts.default();
+        this.runningCount = 0;
+        this.error = null;
+        var awaitCalled = false;
+        this.callAwait = (function callAwait() {
+            if (awaitCalled || !this.awaitCallback) return;
+            awaitCalled = true;
+            return this.awaitCallback(this.error);
+        }).bind(this);
+        this.callDefer = (function callDefer(err) {
+            this.runningCount--;
+            if (err && !this.error) this.error = err;
+            if (this.error || !(this.tasks.length + this.runningCount)) return this.callAwait();
+            if (!this.tasks.length) return;
+            this.runningCount++;
+            this.tasks.shift()(this.callDefer);
+        }).bind(this);
     }
-    var tasks = new _LinkedArrayts.default();
-    var runningCount = 0;
-    var error = null;
-    function queueCallback(err) {
-        runningCount--;
-        if (err && !error) error = err;
-        if (error || !(tasks.length + runningCount)) return callAwait();
-        if (!tasks.length) return;
-        runningCount++;
-        tasks.shift()(queueCallback);
-    }
-    return {
-        defer: function defer(defer) {
-            if (error) return;
-            if (runningCount < parallelism) {
-                runningCount++;
-                defer(queueCallback);
-            } else tasks.push(defer);
-        },
-        await: function _await(callback) {
-            if (awaitCallback) throw new Error("Awaiting callback was added twice: ".concat(callback));
-            awaitCallback = callback;
-            if (error || !(tasks.length + runningCount)) return callAwait();
-        }
+    var _proto = Queue.prototype;
+    _proto.defer = function defer(defer) {
+        if (this.error) return;
+        if (this.runningCount < this.parallelism) {
+            this.runningCount++;
+            defer(this.callDefer);
+        } else this.tasks.push(defer);
     };
-}
+    _proto.await = function _await(callback) {
+        if (this.awaitCallback) throw new Error("Awaiting callback was added twice: ".concat(callback));
+        this.awaitCallback = callback;
+        if (this.error || !(this.tasks.length + this.runningCount)) return this.callAwait();
+    };
+    return Queue;
+}();
 /* CJS INTEROP */ if (exports.__esModule && exports.default) { try { Object.defineProperty(exports.default, '__esModule', { value: true }); for (var key in exports) { exports.default[key] = exports[key]; } } catch (_) {}; module.exports = exports.default; }
