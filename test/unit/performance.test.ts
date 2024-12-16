@@ -1,5 +1,6 @@
-const nextTick = require('../lib/nextTick.cjs');
-const Queue = require('queue-cb');
+import asap from 'asap';
+// @ts-ignore
+import Queue from 'queue-cb';
 
 const MAX_CALLSTACK = 6000;
 const MAX_STACK = 100000;
@@ -10,7 +11,7 @@ describe('performance', () => {
     let index = 0;
     function deferFn(callback) {
       if (index++ < MAX_CALLSTACK) queue.defer(deferFn);
-      return nextTick(callback);
+      return asap(callback);
       // return callback();
     }
     queue.defer(deferFn);
@@ -31,7 +32,7 @@ describe('performance', () => {
   it('stack overflow (parallism 2)', (done) => {
     const queue = Queue(2);
     queue.defer((callback) => {
-      nextTick(callback);
+      asap(callback);
     });
     for (let index = 0; index < MAX_STACK; index++) {
       queue.defer((callback) => {

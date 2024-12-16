@@ -1,7 +1,7 @@
-const assert = require('assert');
-const nextTick = require('../lib/nextTick.cjs');
-
-const Queue = require('queue-cb');
+import assert from 'assert';
+import asap from 'asap';
+// @ts-ignore
+import Queue from 'queue-cb';
 
 describe('Queue', () => {
   it('infinite parallelism (not new)', (done) => {
@@ -10,21 +10,21 @@ describe('Queue', () => {
     const results = [];
     queue.defer((callback) => {
       results.push('1.0');
-      nextTick(() => {
+      asap(() => {
         results.push('1.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      nextTick(() => {
+      asap(() => {
         results.push('2.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      nextTick(() => {
+      asap(() => {
         results.push('3.1');
         callback();
       });
@@ -42,21 +42,21 @@ describe('Queue', () => {
     const results = [];
     queue.defer((callback) => {
       results.push('1.0');
-      nextTick(() => {
+      asap(() => {
         results.push('1.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      nextTick(() => {
+      asap(() => {
         results.push('2.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      nextTick(() => {
+      asap(() => {
         results.push('3.1');
         callback();
       });
@@ -74,21 +74,21 @@ describe('Queue', () => {
     const results = [];
     queue.defer((callback) => {
       results.push('1.0');
-      nextTick(() => {
+      asap(() => {
         results.push('1.1');
         return callback(new Error('error'));
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      nextTick(() => {
+      asap(() => {
         results.push('2.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      nextTick(() => {
+      asap(() => {
         results.push('3.1');
         callback();
       });
@@ -106,21 +106,21 @@ describe('Queue', () => {
     const results = [];
     queue.defer((callback) => {
       results.push('1.0');
-      nextTick(() => {
+      asap(() => {
         results.push('1.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      nextTick(() => {
+      asap(() => {
         results.push('2.1');
         return callback(new Error('error'));
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      nextTick(() => {
+      asap(() => {
         results.push('3.1');
         callback();
       });
@@ -138,21 +138,21 @@ describe('Queue', () => {
     const results = [];
     queue.defer((callback) => {
       results.push('1.0');
-      nextTick(() => {
+      asap(() => {
         results.push('1.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      nextTick(() => {
+      asap(() => {
         results.push('2.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      nextTick(() => {
+      asap(() => {
         results.push('3.1');
         callback();
       });
@@ -170,21 +170,21 @@ describe('Queue', () => {
     const results = [];
     queue.defer((callback) => {
       results.push('1.0');
-      nextTick(() => {
+      asap(() => {
         results.push('1.1');
         return callback(new Error('error'));
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      nextTick(() => {
+      asap(() => {
         results.push('2.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      nextTick(() => {
+      asap(() => {
         results.push('3.1');
         callback();
       });
@@ -202,21 +202,21 @@ describe('Queue', () => {
     const results = [];
     queue.defer((callback) => {
       results.push('1.0');
-      nextTick(() => {
+      asap(() => {
         results.push('1.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      nextTick(() => {
+      asap(() => {
         results.push('2.1');
         return callback(new Error('error'));
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      nextTick(() => {
+      asap(() => {
         results.push('3.1');
         callback();
       });
@@ -234,21 +234,21 @@ describe('Queue', () => {
     const results = [];
     queue.defer((callback) => {
       results.push('1.0');
-      nextTick(() => {
+      asap(() => {
         results.push('1.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      nextTick(() => {
+      asap(() => {
         results.push('2.1');
         return callback(new Error('error'));
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      nextTick(() => {
+      asap(() => {
         results.push('3.1');
         callback();
       });

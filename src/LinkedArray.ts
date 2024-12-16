@@ -1,5 +1,9 @@
 // stripped down version of https://github.com/mafintosh/fifo
 class Node {
+  prev: this;
+  next: this;
+  value: unknown;
+
   constructor(val) {
     this.prev = this.next = this;
     this.value = val;
@@ -13,6 +17,9 @@ class Node {
 }
 
 export default class LinkedArray {
+  node: Node | null;
+  length: number;
+
   constructor() {
     this.node = null;
     this.length = 0;
