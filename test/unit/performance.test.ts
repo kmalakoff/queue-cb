@@ -7,7 +7,7 @@ const MAX_STACK = 100000;
 
 describe('performance', () => {
   it('rolled loop (parallism 1)', (done) => {
-    const queue = Queue(1);
+    const queue = new Queue(1);
     let index = 0;
     function deferFn(callback) {
       if (index++ < MAX_CALLSTACK) queue.defer(deferFn);
@@ -18,7 +18,7 @@ describe('performance', () => {
     queue.await(done);
   });
   it('stack overflow (parallism 1)', (done) => {
-    const queue = Queue(1);
+    const queue = new Queue(1);
     queue.defer((callback) => {
       callback();
     });
@@ -30,7 +30,7 @@ describe('performance', () => {
     queue.await(done);
   });
   it('stack overflow (parallism 2)', (done) => {
-    const queue = Queue(2);
+    const queue = new Queue(2);
     queue.defer((callback) => {
       asap(callback);
     });
@@ -42,7 +42,7 @@ describe('performance', () => {
     queue.await(done);
   });
   it('stack overflow (parallism Infinity)', (done) => {
-    const queue = Queue();
+    const queue = new Queue();
     for (let index = 0; index < MAX_STACK; index++) {
       queue.defer((callback) => {
         callback();
