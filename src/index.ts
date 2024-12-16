@@ -1,9 +1,9 @@
 // @ts-ignore
 import LinkedArray from './LinkedArray.ts';
 
-export type DeferCallback = (error: Error | null) => void;
+export type DeferCallback = (error: Error | undefined) => void;
 export type DeferFunction = (calback: DeferCallback) => void;
-export type AwaitCallback = (error: Error | null) => void;
+export type AwaitCallback = (error: Error | undefined) => void;
 
 type CallAwaitFunction = () => void;
 type CallDeferFunction = (error: Error | null) => void;
