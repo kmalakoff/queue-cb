@@ -1,6 +1,6 @@
 {
   "name": "queue-cb",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "A scalable queue for parallel callbacks",
   "keywords": [
     "queue",
@@ -45,7 +45,7 @@
     "@types/node": "^22.10.2",
     "asap": "^2.0.6",
     "depcheck": "^1.4.7",
-    "ts-dev-stack": "^1.2.1"
+    "ts-dev-stack": "^1.2.2"
   },
   "engines": {
     "node": ">=0.8"
