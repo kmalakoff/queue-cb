@@ -1,1 +1,1 @@
-ignores: ["queue-cb", "@types/*", "@biomejs/*"]
+ignores: ["@types/*", "queue-cb", "@biomejs/*"]
