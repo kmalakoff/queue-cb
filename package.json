@@ -35,11 +35,10 @@
     "version": "tsds version"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
-    "@types/asap": "^2.0.2",
-    "@types/mocha": "^10.0.10",
-    "@types/node": "^22.10.6",
-    "asap": "^2.0.6"
+    "@types/asap": "*",
+    "@types/mocha": "*",
+    "@types/node": "*",
+    "asap": "*"
   },
   "engines": {
     "node": ">=0.8"
