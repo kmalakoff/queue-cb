@@ -1,4 +1,4 @@
-import LinkedArray from './LinkedArray';
+import LinkedArray from './LinkedArray.js';
 
 export type DeferCallback = (error?: Error) => void;
 export type DeferFunction = (calback: DeferCallback) => void;
