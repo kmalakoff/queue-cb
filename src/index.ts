@@ -6,7 +6,7 @@ export type AwaitCallback = (error?: Error) => void;
 
 interface QueueState {
   parallelism: number;
-  tasks: LinkedArray;
+  tasks: LinkedArray<DeferFunction>;
   runningCount: number;
   error: Error | null;
   awaitCalled: boolean;

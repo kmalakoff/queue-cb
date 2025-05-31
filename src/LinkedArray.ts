@@ -1,23 +1,23 @@
 // stripped down version of https://github.com/mafintosh/fifo
-class Node {
-  prev: this;
-  next: this;
-  value: unknown;
+class Node<T> {
+  prev: Node<T>;
+  next: Node<T>;
+  value: T;
 
-  constructor(val) {
+  constructor(value: T) {
     this.prev = this.next = this;
-    this.value = val;
+    this.value = value;
   }
 
-  link(next) {
+  link(next: Node<T>): Node<T> {
     this.next = next;
     next.prev = this;
     return next;
   }
 }
 
-export default class LinkedArray {
-  node: Node | null;
+export default class LinkedArray<T> {
+  node: Node<T> | null;
   length: number;
 
   constructor() {
@@ -25,8 +25,8 @@ export default class LinkedArray {
     this.length = 0;
   }
 
-  push(value) {
-    const node = new Node(value);
+  push(value: T): Node<T> {
+    const node = new Node<T>(value);
     this.length++;
     if (!this.node) {
       this.node = node;
@@ -37,7 +37,7 @@ export default class LinkedArray {
     return node;
   }
 
-  shift() {
+  shift(): T | null {
     if (!this.node) throw new Error('Cannot shift: array empty');
     const node = this.node;
     this.length--;
