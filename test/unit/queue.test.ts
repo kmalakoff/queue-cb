@@ -1,5 +1,5 @@
-import assert from 'assert';
 import asap from 'asap';
+import assert from 'assert';
 // @ts-ignore
 import Queue from 'queue-cb';
 
