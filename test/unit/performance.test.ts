@@ -1,5 +1,4 @@
 import asap from 'asap';
-// @ts-ignore
 import Queue from 'queue-cb';
 
 const MAX_CALLSTACK = 6000;
