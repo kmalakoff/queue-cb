@@ -1,6 +1,5 @@
 import asap from 'asap';
 import assert from 'assert';
-// @ts-ignore
 import Queue from 'queue-cb';
 
 describe('Queue', () => {
