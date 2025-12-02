@@ -31,15 +31,19 @@
   "scripts": {
     "build": "tsds build",
     "format": "biome check --write --unsafe",
-    "test": "mocha --no-timeouts test/**/*.test.*",
+    "prepublishOnly": "tsds validate",
+    "test": "tsds test:node --no-timeouts",
     "test:engines": "nvu engines tsds test:node --no-timeouts",
     "version": "tsds version"
   },
   "devDependencies": {
+    "@biomejs/biome": "*",
     "@types/asap": "*",
     "@types/mocha": "*",
     "@types/node": "*",
-    "asap": "*"
+    "asap": "*",
+    "node-version-use": "*",
+    "ts-dev-stack": "*"
   },
   "engines": {
     "node": ">=0.8"
