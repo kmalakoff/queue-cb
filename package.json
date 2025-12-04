@@ -1,6 +1,6 @@
 {
   "name": "queue-cb",
-  "version": "1.5.11",
+  "version": "1.6.0",
   "description": "A scalable queue for parallel callbacks",
   "keywords": [
     "queue",
