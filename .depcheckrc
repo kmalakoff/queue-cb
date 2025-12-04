@@ -1,1 +1,1 @@
-ignores: ["node-version-use", "ts-dev-stack", "@biomejs/biome", "queue-cb"]
+ignores: ["node-version-use", "ts-dev-stack", "queue-cb"]
