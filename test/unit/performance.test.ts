@@ -1,5 +1,6 @@
-import asap from 'asap';
 import Queue from 'queue-cb';
+
+const defer = typeof setImmediate === 'function' ? setImmediate : (fn: () => void) => setTimeout(fn, 0);
 
 const MAX_CALLSTACK = 6000;
 const MAX_STACK = 100000;
@@ -10,8 +11,7 @@ describe('performance', () => {
     let index = 0;
     function deferFn(callback) {
       if (index++ < MAX_CALLSTACK) queue.defer(deferFn);
-      return asap(callback);
-      // return callback();
+      return callback();
     }
     queue.defer(deferFn);
     queue.await(done);
@@ -31,7 +31,7 @@ describe('performance', () => {
   it('stack overflow (parallism 2)', (done) => {
     const queue = new Queue(2);
     queue.defer((callback) => {
-      asap(callback);
+      callback();
     });
     for (let index = 0; index < MAX_STACK; index++) {
       queue.defer((callback) => {
@@ -56,7 +56,7 @@ describe('performance', () => {
     // - Without trampoline, this would cause stack overflow
     const queue = new Queue(1);
     queue.defer((callback) => {
-      asap(callback); // Delay completion so tasks queue up
+      defer(callback); // Delay completion so tasks queue up
     });
     for (let index = 0; index < MAX_STACK; index++) {
       queue.defer((callback) => {

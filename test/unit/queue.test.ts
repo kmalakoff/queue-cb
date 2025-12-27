@@ -1,6 +1,7 @@
-import asap from 'asap';
 import assert from 'assert';
 import Queue from 'queue-cb';
+
+const defer = typeof setImmediate === 'function' ? setImmediate : (fn: () => void) => setTimeout(fn, 0);
 
 describe('Queue', () => {
   it('infinite parallelism (not new)', (done) => {
@@ -9,21 +10,21 @@ describe('Queue', () => {
     const results = [];
     queue.defer((callback) => {
       results.push('1.0');
-      asap(() => {
+      defer(() => {
         results.push('1.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      asap(() => {
+      defer(() => {
         results.push('2.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      asap(() => {
+      defer(() => {
         results.push('3.1');
         callback();
       });
@@ -41,21 +42,21 @@ describe('Queue', () => {
     const results = [];
     queue.defer((callback) => {
       results.push('1.0');
-      asap(() => {
+      defer(() => {
         results.push('1.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      asap(() => {
+      defer(() => {
         results.push('2.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      asap(() => {
+      defer(() => {
         results.push('3.1');
         callback();
       });
@@ -73,21 +74,21 @@ describe('Queue', () => {
     const results = [];
     queue.defer((callback) => {
       results.push('1.0');
-      asap(() => {
+      defer(() => {
         results.push('1.1');
         return callback(new Error('error'));
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      asap(() => {
+      defer(() => {
         results.push('2.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      asap(() => {
+      defer(() => {
         results.push('3.1');
         callback();
       });
@@ -105,21 +106,21 @@ describe('Queue', () => {
     const results = [];
     queue.defer((callback) => {
       results.push('1.0');
-      asap(() => {
+      defer(() => {
         results.push('1.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      asap(() => {
+      defer(() => {
         results.push('2.1');
         return callback(new Error('error'));
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      asap(() => {
+      defer(() => {
         results.push('3.1');
         callback();
       });
@@ -137,21 +138,21 @@ describe('Queue', () => {
     const results = [];
     queue.defer((callback) => {
       results.push('1.0');
-      asap(() => {
+      defer(() => {
         results.push('1.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      asap(() => {
+      defer(() => {
         results.push('2.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      asap(() => {
+      defer(() => {
         results.push('3.1');
         callback();
       });
@@ -169,21 +170,21 @@ describe('Queue', () => {
     const results = [];
     queue.defer((callback) => {
       results.push('1.0');
-      asap(() => {
+      defer(() => {
         results.push('1.1');
         return callback(new Error('error'));
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      asap(() => {
+      defer(() => {
         results.push('2.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      asap(() => {
+      defer(() => {
         results.push('3.1');
         callback();
       });
@@ -201,21 +202,21 @@ describe('Queue', () => {
     const results = [];
     queue.defer((callback) => {
       results.push('1.0');
-      asap(() => {
+      defer(() => {
         results.push('1.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      asap(() => {
+      defer(() => {
         results.push('2.1');
         return callback(new Error('error'));
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      asap(() => {
+      defer(() => {
         results.push('3.1');
         callback();
       });
@@ -233,21 +234,21 @@ describe('Queue', () => {
     const results = [];
     queue.defer((callback) => {
       results.push('1.0');
-      asap(() => {
+      defer(() => {
         results.push('1.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      asap(() => {
+      defer(() => {
         results.push('2.1');
         return callback(new Error('error'));
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      asap(() => {
+      defer(() => {
         results.push('3.1');
         callback();
       });
