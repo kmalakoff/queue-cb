@@ -1,8 +1,8 @@
 import LinkedArray from './LinkedArray.ts';
 
-export type DeferCallback = (error?: Error) => void;
+export type DeferCallback = (error?: Error | null) => void;
 export type DeferFunction = (calback: DeferCallback) => void;
-export type AwaitCallback = (error?: Error) => void;
+export type AwaitCallback = (error?: Error | null) => void;
 
 interface QueueState {
   parallelism: number;
@@ -49,7 +49,7 @@ export default class Queue {
     }
   }
 
-  private _callDefer(err?: Error) {
+  private _callDefer(err?: Error | null) {
     this._state.runningCount--;
     if (err && !this._state.error) this._state.error = err;
     if (this._state.flushing) return;
