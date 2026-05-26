@@ -1,29 +1,30 @@
-import asap from 'asap';
 import assert from 'assert';
 import Queue from 'queue-cb';
+
+const defer = typeof setImmediate === 'function' ? setImmediate : (fn: () => void) => setTimeout(fn, 0);
 
 describe('Queue', () => {
   it('infinite parallelism (not new)', (done) => {
     const queue = new Queue();
 
-    const results = [];
+    const results: string[] = [];
     queue.defer((callback) => {
       results.push('1.0');
-      asap(() => {
+      defer(() => {
         results.push('1.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      asap(() => {
+      defer(() => {
         results.push('2.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      asap(() => {
+      defer(() => {
         results.push('3.1');
         callback();
       });
@@ -38,24 +39,24 @@ describe('Queue', () => {
   it('infinite parallelism', (done) => {
     const queue = new Queue();
 
-    const results = [];
+    const results: string[] = [];
     queue.defer((callback) => {
       results.push('1.0');
-      asap(() => {
+      defer(() => {
         results.push('1.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      asap(() => {
+      defer(() => {
         results.push('2.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      asap(() => {
+      defer(() => {
         results.push('3.1');
         callback();
       });
@@ -70,30 +71,30 @@ describe('Queue', () => {
   it('infinite parallelism (errors 1)', (done) => {
     const queue = new Queue();
 
-    const results = [];
+    const results: string[] = [];
     queue.defer((callback) => {
       results.push('1.0');
-      asap(() => {
+      defer(() => {
         results.push('1.1');
         return callback(new Error('error'));
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      asap(() => {
+      defer(() => {
         results.push('2.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      asap(() => {
+      defer(() => {
         results.push('3.1');
         callback();
       });
     });
     queue.await((err) => {
-      assert.ok(err, `Has error: ${err.message}`);
+      assert.ok(err, `Has error: ${err?.message}`);
       assert.deepEqual(results, ['1.0', '2.0', '3.0', '1.1']);
       done();
     });
@@ -102,30 +103,30 @@ describe('Queue', () => {
   it('infinite parallelism (errors 2)', (done) => {
     const queue = new Queue();
 
-    const results = [];
+    const results: string[] = [];
     queue.defer((callback) => {
       results.push('1.0');
-      asap(() => {
+      defer(() => {
         results.push('1.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      asap(() => {
+      defer(() => {
         results.push('2.1');
         return callback(new Error('error'));
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      asap(() => {
+      defer(() => {
         results.push('3.1');
         callback();
       });
     });
     queue.await((err) => {
-      assert.ok(err, `Has error: ${err.message}`);
+      assert.ok(err, `Has error: ${err?.message}`);
       assert.deepEqual(results, ['1.0', '2.0', '3.0', '1.1', '2.1']);
       done();
     });
@@ -134,24 +135,24 @@ describe('Queue', () => {
   it('parallelism 1', (done) => {
     const queue = new Queue(1);
 
-    const results = [];
+    const results: string[] = [];
     queue.defer((callback) => {
       results.push('1.0');
-      asap(() => {
+      defer(() => {
         results.push('1.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      asap(() => {
+      defer(() => {
         results.push('2.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      asap(() => {
+      defer(() => {
         results.push('3.1');
         callback();
       });
@@ -166,30 +167,30 @@ describe('Queue', () => {
   it('parallelism 1 (errors 1)', (done) => {
     const queue = new Queue(1);
 
-    const results = [];
+    const results: string[] = [];
     queue.defer((callback) => {
       results.push('1.0');
-      asap(() => {
+      defer(() => {
         results.push('1.1');
         return callback(new Error('error'));
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      asap(() => {
+      defer(() => {
         results.push('2.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      asap(() => {
+      defer(() => {
         results.push('3.1');
         callback();
       });
     });
     queue.await((err) => {
-      assert.ok(err, `Has error: ${err.message}`);
+      assert.ok(err, `Has error: ${err?.message}`);
       assert.deepEqual(results, ['1.0', '1.1']);
       done();
     });
@@ -198,30 +199,30 @@ describe('Queue', () => {
   it('parallelism 1 (errors 2)', (done) => {
     const queue = new Queue(1);
 
-    const results = [];
+    const results: string[] = [];
     queue.defer((callback) => {
       results.push('1.0');
-      asap(() => {
+      defer(() => {
         results.push('1.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      asap(() => {
+      defer(() => {
         results.push('2.1');
         return callback(new Error('error'));
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      asap(() => {
+      defer(() => {
         results.push('3.1');
         callback();
       });
     });
     queue.await((err) => {
-      assert.ok(err, `Has error: ${err.message}`);
+      assert.ok(err, `Has error: ${err?.message}`);
       assert.deepEqual(results, ['1.0', '1.1', '2.0', '2.1']);
       done();
     });
@@ -230,38 +231,38 @@ describe('Queue', () => {
   it('catches await added twice', (done) => {
     const queue = new Queue(1);
 
-    const results = [];
+    const results: string[] = [];
     queue.defer((callback) => {
       results.push('1.0');
-      asap(() => {
+      defer(() => {
         results.push('1.1');
         callback();
       });
     });
     queue.defer((callback) => {
       results.push('2.0');
-      asap(() => {
+      defer(() => {
         results.push('2.1');
         return callback(new Error('error'));
       });
     });
     queue.defer((callback) => {
       results.push('3.0');
-      asap(() => {
+      defer(() => {
         results.push('3.1');
         callback();
       });
     });
     queue.await((err) => {
-      assert.ok(err, `Has error: ${err.message}`);
+      assert.ok(err, `Has error: ${err?.message}`);
       assert.deepEqual(results, ['1.0', '1.1', '2.0', '2.1']);
       done();
     });
     try {
       queue.await(() => {});
     } catch (error) {
-      const err = error;
-      assert.ok(err, `Has error: ${err.message}`);
+      const err = error as Error;
+      assert.ok(err, `Has error: ${err?.message}`);
       assert.ok(err.toString().indexOf('Error: Awaiting callback was added twice') === 0, 'Expected message');
     }
   });
@@ -269,7 +270,7 @@ describe('Queue', () => {
   it('calls await if an error occurs before it is added', (done) => {
     const queue = new Queue(1);
 
-    const results = [];
+    const results: string[] = [];
     queue.defer((callback) => {
       results.push('1.0');
       return callback(new Error('error'));
@@ -283,7 +284,7 @@ describe('Queue', () => {
       callback();
     });
     queue.await((err) => {
-      assert.ok(err, `Has error: ${err.message}`);
+      assert.ok(err, `Has error: ${err?.message}`);
       assert.deepEqual(results, ['1.0']);
       done();
     });
