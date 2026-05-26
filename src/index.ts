@@ -8,7 +8,7 @@ interface QueueState {
   parallelism: number;
   tasks: LinkedArray<DeferFunction>;
   runningCount: number;
-  error: Error | undefined;
+  error: Error | null;
   awaitCalled: boolean;
   awaitCallback: AwaitCallback | undefined;
   flushing: boolean;
@@ -22,7 +22,7 @@ export default class Queue {
       parallelism,
       tasks: new LinkedArray(),
       runningCount: 0,
-      error: undefined,
+      error: null,
       awaitCallback: undefined,
       awaitCalled: false,
       flushing: false,
