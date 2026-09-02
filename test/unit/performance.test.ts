@@ -49,4 +49,20 @@ describe('performance', () => {
     }
     queue.await(done);
   });
+  it('trampoline - delayed first task with sync callbacks (parallelism 1)', (done) => {
+    // This test exercises the trampoline mechanism:
+    // - First task delays its callback, allowing many tasks to queue
+    // - When first task completes, queued tasks all call callback synchronously
+    // - Without trampoline, this would cause stack overflow
+    const queue = new Queue(1);
+    queue.defer((callback) => {
+      asap(callback); // Delay completion so tasks queue up
+    });
+    for (let index = 0; index < MAX_STACK; index++) {
+      queue.defer((callback) => {
+        callback(); // Sync callback
+      });
+    }
+    queue.await(done);
+  });
 });
