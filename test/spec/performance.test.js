@@ -1,5 +1,4 @@
-var nextTick = require('next-tick');
-
+var nextTick = require('../../lib/nextTick');
 var Queue = require('../..');
 
 var MAX_STACK = 100000;
