@@ -1,4 +1,4 @@
-var nextTick = require('../../lib/nextTick');
+var nextTick = require('../lib/nextTick');
 var Queue = require('../..');
 
 var MAX_STACK = 100000;
@@ -12,7 +12,7 @@ describe('performance', function () {
     });
     for (var index = 0; index < MAX_STACK; index++) {
       queue.defer(function (callback) {
-        callback();
+        nextTick(callback); // use a next-tick function to unroll the call stack
       });
     }
     queue.await(done);
