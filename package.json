@@ -1,6 +1,6 @@
 {
   "name": "queue-cb",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A scalable queue for parallel callbacks",
   "main": "index.js",
   "scripts": {
