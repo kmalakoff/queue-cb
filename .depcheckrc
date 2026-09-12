@@ -1,1 +1,1 @@
-ignores: ["node-version-use", "ts-dev-stack", "queue-cb"]
+ignores: ["queue-cb", "node-version-use", "ts-dev-stack"]
